@@ -109,7 +109,7 @@ class DetailView(View):
         
         # 댓글 Form
         comment_form = CommentForm()
-
+        
         # 태그 Form
         hashtag_form = HashTagForm()
 
