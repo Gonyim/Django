@@ -33,6 +33,9 @@ class Registration(View):
 ### Login
 class Login(View):
     def get(self, request):
+        if request.user.is_authenticated:
+            return redirect('blog:list')
+        
         form = LoginForm()
         context = {
             'form': form
@@ -40,6 +43,9 @@ class Login(View):
         return render(request, 'user/user_login.html', context)
     
     def post(self, request):
+        if request.user.is_authenticated:
+            return redirect('blog:list')
+        
         form = LoginForm(request.POST)
         if form.is_valid():
             email = form.cleaned_data['email']
@@ -50,19 +56,17 @@ class Login(View):
                 login(request, user)
                 return redirect('blog:list')
             
-            form.add_error(None, "아이디가 없습니다.")
-
+            form.add_error(None, '아이디가 없습니다.')
+        
         context = {
             'form': form
         }
-
-        return render(request, 'user/user_login.html')
-
-
+        
+        return render(request, 'user/user_login.html', context)
+    
 
 ### Logout
 class Logout(View):
     def get(self, request):
         logout(request)
-        # request.user.email
         return redirect('blog:list')
