@@ -1,8 +1,7 @@
-{% extends 'user/base.html' %}
+{% extends 'base.html' %}
 
 {% block content %}
 <h2>로그인 페이지</h2>
-
 <form action="{% url 'user:login' %}" method="post">
     {% csrf_token %}
     {{ form.as_p }}
